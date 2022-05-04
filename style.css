@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#menu {
+    margin: 10px;
+    padding-left: 5px;
+}
+
+#zone {
+    margin: 10px;
+    border-radius: 5px;
+    padding-left: 5px;
+}
+
+h1 {
+    height: 30px;
+    width: 90%;
+    margin: 15px 0px 30px 0px
+}
+
+h3 {
+    height: 30px;
+    width: 90%;
+    margin: 15px 0px 30px 0px
+}
+
+.btn {
+    height: 30px;
+    width: 30px;
+    border-radius: 25%;
+    background: white;
+}
+
+.btn.active {
+    background-color: lightgray;
+}
+
+#addImg {
+    border: 1px solid black;
+    background-color: lightgrey;
+    border-radius: 25px;
+    height: 400px;
+    width: 600px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    display: none;
+}
+
+#addImg.active {
+    display: block;
+}
+
+#addImgText {
+    height: 100px;
+}
+
+.newDiv {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
