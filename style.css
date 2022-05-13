@@ -8,22 +8,23 @@
     padding-left: 5px;
 }
 
-#zone {
+#text_editor_wrapper {
     margin: 10px;
     border-radius: 5px;
     padding-left: 5px;
 }
 
-h1 {
+#title {
+    padding-left: 15px;
     height: 30px;
     width: 90%;
-    margin: 15px 0px 30px 0px
+    margin: 15px 0px 30px 30px;
+    padding-left: 5px;
 }
 
-h3 {
-    height: 30px;
-    width: 90%;
-    margin: 15px 0px 30px 0px
+#title:hover {
+    border: 1px solid rgba(74, 85, 240, 0.2);
+    border-radius: 15px;
 }
 
 .btn {
@@ -37,6 +38,16 @@ h3 {
     background-color: lightgray;
 }
 
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: none;
+}
+
 #addImg {
     border: 1px solid black;
     background-color: lightgrey;
@@ -47,21 +58,90 @@ h3 {
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 10px;
+    padding: 20px;
     display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#overlay.active {
+    display: block;
 }
 
 #addImg.active {
-    display: block;
+    display: flex;
 }
 
 #addImgText {
     height: 100px;
 }
 
-.newDiv {
+.newDivImg {
     display: flex;
+    flex-direction: row;
     width: 100%;
     justify-content: flex-start;
     align-items: center;
+    margin: 10px 0px 10px 0px;
+}
+
+.newDivImg:hover {
+    border: 1px solid rgba(74, 85, 240, 0.2);
+    border-radius: 25px;
+}
+
+span.placeholder {
+    color: grey;
+}
+
+span.placeholder::before {
+    content: "saisir le texte";
+}
+
+span.placeholder:focus::before {
+    content: "";
+    display: none;
+}
+
+.paragraphe {
+    min-height: 30px;
+    width: 90%;
+    margin: 15px 0px 30px 25px;
+    padding-left: 10px;
+}
+
+.paragraphe:hover {
+    border: 1px solid rgba(74, 85, 240, 0.2);
+    border-radius: 15px;
+}
+
+.button_opt {
+    padding: 4px 7px;
+    background: black;
+    color: lightgrey;
+    position: absolute;
+    vertical-align: auto;
+    right: 3%;
+    top: 15%;
+    font-size: 18px;
+}
+
+.button_opt:hover {
+    background: lightgrey;
+    color: black;
+}
+
+.insert_img {
+    /*display: none;*/
+    flex-direction: column;
+    width: 200px;
+    background-color: lightgray;
+    position: absolute;
+    top: 15%;
+    right: 5%;
+    font-size: 17px;
+}
+
+.opt_img:hover {
+    background-color: aqua;
 }

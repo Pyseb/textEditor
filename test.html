@@ -23,9 +23,23 @@
     </div>
 
 
-    <div contenteditable spellcheck style="border:1px solid black; height: 500px; overflow-y:auto ;" id="zone">
+    <div contenteditable spellcheck style="border:1px solid black; height: 500px; overflow-y:auto ;" id="text_editor_wrapper">
+        <div class="paragraphe">
+            <p contenteditable="true" id="a">
+                <span class="placeholder"></span>
+            </p>
+            <div class="button_opt">+</div>
+        </div>
+
 
     </div>
+    <div class="insert_img">
+        <div id="left_img" class="opt_img">Ajouter une image à gauche</div>
+        <div id="right_img" class="opt_img">Ajouter une image à droite</div>
+
+    </div>
+
+    <div id="overlay"></div>
     <div id="addImg">
         <textarea id="addImgText" placeholder="Saisissez votre texte"></textarea>
         <!--<form action="envoi_img.php" method="POST" enctype="multipart/form-data">-->
@@ -33,26 +47,39 @@
         <input type="file" name="image[]" id="image" multiple="multiple">
 
         <p>L'image doit être:</p>
-        <input type="radio" id="radioLeft" name="align" value="left">
-        <label for="left">A gauche</label>
-        <input type="radio" id="radioRight" name="align" value="right">
-        <label for="right">A droite</label>
-        <input type="radio" id="radioCenter" name="align" value="center">
-        <label for="center">Centrer</label>
         <div>
-            <button id='send'>Envoi</button>
+            <input type="radio" id="radioLeft" name="align" value="left">
+            <label for="left">A gauche</label>
+            <input type="radio" id="radioRight" name="align" value="right">
+            <label for="right">A droite</label>
+            <input type="radio" id="radioCenter" name="align" value="center">
+            <label for="center">Centrer</label>
         </div>
+        <p>Taille de l'image:</p>
+        <div>
+
+            <input type="radio" id="smallImg" name="size" value="small">
+            <label for="small">Petite</label>
+            <input type="radio" id="mediumImg" name="size" value="medium">
+            <label for="medium">Moyenne</label>
+            <input type="radio" id="bigImg" name="size" value="big">
+            <label for="big">Grande</label>
+        </div>
+        <button id='send'>Envoi</button>
+
+
         <!-- </form>-->
     </div>
 
 </body>
 <script>
     let v = 0
-    let zone = document.getElementById("zone")
+    let te_wrapper = document.getElementById("text_editor_wrapper")
 
     let btn_gras = document.getElementById('gras');
     btn_gras.addEventListener('click', function() {
         mep('strong', this);
+
 
     })
     let btn_underline = document.getElementById('under');
@@ -71,6 +98,20 @@
     let btn_send = document.getElementById('send');
     btn_send.addEventListener('click', sendNewImg)
 
+    const overlay = document.getElementById('overlay');
+    overlay.addEventListener('click', toggleBtn)
+
+    let opt_menu = document.querySelector('.insert_img');
+    let btn_opt = document.querySelector(".button_opt");
+    btn_opt.addEventListener('click', function() {
+        opt_menu.style.display = "flex";
+
+    })
+
+
+
+
+
 
     // ajout d'image
     function sendNewImg() {
@@ -81,6 +122,13 @@
         const new_text = document.createElement('p')
 
         new_text.innerText = new_img_text.value
+        if (document.getElementById('smallImg').checked) {
+            new_img.style.width = '50px';
+        } else if (document.getElementById('mediumImg').checked) {
+            new_img.style.width = '450px';
+        } else if (document.getElementById('bigImg').checked) {
+            new_img.style.width = '950px';
+        }
         new_img.src = "3000.png"
         new_img.style.width = '150px';
         if (document.getElementById('radioLeft').checked) {
@@ -90,15 +138,18 @@
             new_text.style.order = "1"
             new_img.style.order = "2"
         }
+        new_div.style.width = "98%"
+        new_div.style.padding = "5px"
         new_div.appendChild(new_img)
         new_div.appendChild(new_text)
-        zone.appendChild(new_div)
+        te_wrapper.appendChild(new_div)
         new_img_text.value = ""
         toggleBtn();
 
     }
 
     function toggleBtn() {
+        document.getElementById('overlay').classList.toggle('active')
         document.getElementById('addImg').classList.toggle('active')
     }
 
@@ -106,9 +157,9 @@
     let listTitle = document.getElementById('titleBtn')
     listTitle.addEventListener('change', function() {
 
-        if (zone.firstChild.nodeName == "H1" || zone.firstChild.nodeName == "H3") {
+        if (te_wrapper.firstChild.nodeName == "H1" || te_wrapper.firstChild.nodeName == "H3") {
 
-            zone.firstChild.remove()
+            te_wrapper.firstChild.remove()
 
         }
 
@@ -117,6 +168,7 @@
         title.id = "title"
         title.ariaLabel = "titre"
 
+        title.style.padding = "5px"
 
         span = document.createElement("span")
         span.id = "spanTitle"
@@ -127,7 +179,7 @@
         title.appendChild(span)
 
 
-        zone.insertBefore(title, zone.firstChild)
+        te_wrapper.insertBefore(title, te_wrapper.firstChild)
 
 
 
@@ -153,29 +205,35 @@
             console.log(btn.id)
             let selObj = window.getSelection();
             if (selObj.getRangeAt(0).startOffset != selObj.getRangeAt(0).endOffset) {
-                //console.log(selObj.getRangeAt(0))
                 repObj = `<${valeur}>${selObj}</${valeur}>`
                 replaceSelectionWithHtml(repObj)
 
             } else {
+                new_doc = document.createElement(valeur)
+                new_doc.innerText = ` `
+                new_doc.classList = "newDiv"
+                te_wrapper.insertAdjacentElement("beforeend", new_doc)
+                document.querySelector('.newDiv').style.background = "red"
+                last_focus = document.querySelector('.newDiv')
 
-                repObj = `<${valeur}> </${valeur}>`
-                replaceSelectionWithHtml(repObj)
-                zone.focus()
+                //repObj = `<${valeur}> </${valeur}>`
+                //replaceSelectionWithHtml(repObj)
+                //te_wrapper.focus()
 
             }
-        } else {
-            let range = document.createRange();
-            //range.collapse = true;
-            range.setStartAfter(zone.firstChild)
+        } // else {
+        //    let range = document.createRange();
+        //    //range.collapse = true;
+        //    range.setStartAfter(te_wrapper.firstChild)//
 
-            console.log(range)
+        //    console.log(range)//
 
-            console.log(`pas ${btn.id}`)
-                //zone.lastChild.focus()
+        //    console.log(`pas ${btn.id}`)
+        //        //te_wrapper.lastChild.focus()//
 
-        }
-
+        //}
+        last_focus.focus()
+        console.log(last_focus)
     }
 
     function replaceSelectionWithHtml(html) {
