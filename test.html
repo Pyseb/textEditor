@@ -25,19 +25,27 @@
 
     <div contenteditable spellcheck style="border:1px solid black; height: 500px; overflow-y:auto ;" id="text_editor_wrapper">
         <div class="paragraphe">
-            <p contenteditable="true" id="a">
+            <p contenteditable="true" class="text-content">
                 <span class="placeholder"></span>
             </p>
-            <div class="button_opt">+</div>
+            <div class="img"></div>
+            <div class="modal-add-btn">
+
+                <div class="insert_img">
+                    <div id="left_img" class="opt_img" contentEditable="false">Ajouter une image à gauche</div>
+                    <div id="right_img" class="opt_img" contentEditable="false">Ajouter une image à droite</div>
+
+                </div>
+                <div class="button_opt" contentEditable="false">+
+
+                </div>
+
+            </div>
         </div>
 
 
     </div>
-    <div class="insert_img">
-        <div id="left_img" class="opt_img">Ajouter une image à gauche</div>
-        <div id="right_img" class="opt_img">Ajouter une image à droite</div>
 
-    </div>
 
     <div id="overlay"></div>
     <div id="addImg">
@@ -103,13 +111,21 @@
 
     let opt_menu = document.querySelector('.insert_img');
     let btn_opt = document.querySelector(".button_opt");
-    btn_opt.addEventListener('click', function() {
-        opt_menu.style.display = "flex";
+    btn_opt.addEventListener('mouseenter', function() {
+        opt_menu.classList.toggle('active')
 
     })
-
-
-
+    btn_opt.addEventListener('mouseleave', function() {
+        opt_menu.classList.toggle('active')
+    })
+    opt_menu.addEventListener('mouseenter', function() {
+        if (!opt_menu.classList.contains('active')) {
+            opt_menu.classList.toggle('active')
+        }
+    })
+    opt_menu.addEventListener('mouseleave', function() {
+        opt_menu.classList.toggle('active')
+    })
 
 
 
@@ -234,6 +250,7 @@
         //}
         last_focus.focus()
         console.log(last_focus)
+
     }
 
     function replaceSelectionWithHtml(html) {

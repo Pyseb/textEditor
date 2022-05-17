@@ -105,9 +105,12 @@ span.placeholder:focus::before {
 
 .paragraphe {
     min-height: 30px;
-    width: 90%;
+    max-width: 95%;
     margin: 15px 0px 30px 25px;
     padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .paragraphe:hover {
@@ -115,15 +118,22 @@ span.placeholder:focus::before {
     border-radius: 15px;
 }
 
+.modal-add-btn {
+    display: flex;
+    align-items: stretch;
+}
+
+.modal-add-btn:hover {
+    transform: translateX(-80%);
+}
+
 .button_opt {
     padding: 4px 7px;
+    max-width: 10px;
     background: black;
     color: lightgrey;
-    position: absolute;
-    vertical-align: auto;
-    right: 3%;
-    top: 15%;
     font-size: 18px;
+    height: 100%;
 }
 
 .button_opt:hover {
@@ -132,16 +142,28 @@ span.placeholder:focus::before {
 }
 
 .insert_img {
-    /*display: none;*/
+    display: none;
     flex-direction: column;
     width: 200px;
     background-color: lightgray;
-    position: absolute;
-    top: 15%;
-    right: 5%;
     font-size: 17px;
+    padding: 2px;
+    font-size: 17px;
+    flex-grow: 2;
+}
+
+.opt_img {
+    padding: 5px 0px;
 }
 
 .opt_img:hover {
     background-color: aqua;
+}
+
+.insert_img.active {
+    display: flex;
+}
+
+.text-content {
+    max-width: 95%;
 }
