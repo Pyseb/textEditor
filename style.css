@@ -8,17 +8,20 @@
     padding-left: 5px;
 }
 
-#text_editor_wrapper {
+.text_editor {
     margin: 10px;
     border-radius: 5px;
     padding-left: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
 #title {
     padding-left: 15px;
     height: 30px;
     width: 90%;
-    margin: 15px 0px 30px 30px;
+    margin: 15px 0px 10px 30px;
     padding-left: 5px;
 }
 
@@ -95,22 +98,18 @@ span.placeholder {
 }
 
 span.placeholder::before {
-    content: "saisir le texte";
-}
-
-span.placeholder:focus::before {
-    content: "";
-    display: none;
+    content: "Saisir le texte";
 }
 
 .paragraphe {
     min-height: 30px;
-    max-width: 95%;
+    width: 75%;
     margin: 15px 0px 30px 25px;
     padding-left: 10px;
+    flex-grow: 4;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .paragraphe:hover {
@@ -118,22 +117,33 @@ span.placeholder:focus::before {
     border-radius: 15px;
 }
 
-.modal-add-btn {
+.btn_selector {
     display: flex;
-    align-items: stretch;
+    flex-direction: column;
 }
 
-.modal-add-btn:hover {
-    transform: translateX(-80%);
+.modal-add-btn {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 10px;
+    flex-direction: row;
+}
+
+.opt_selector {
+    display: flex;
+    flex-direction: column
 }
 
 .button_opt {
-    padding: 4px 7px;
-    max-width: 10px;
+    margin: 2px 0px;
+    padding: 7px 7px;
+    max-width: 15px;
+    max-height: 15px;
     background: black;
     color: lightgrey;
     font-size: 18px;
     height: 100%;
+    border-radius: 3px;
 }
 
 .button_opt:hover {
@@ -141,7 +151,7 @@ span.placeholder:focus::before {
     color: black;
 }
 
-.insert_img {
+.menu_img {
     display: none;
     flex-direction: column;
     width: 200px;
@@ -153,17 +163,32 @@ span.placeholder:focus::before {
 }
 
 .opt_img {
-    padding: 5px 0px;
+    padding: 5px 3px;
 }
 
 .opt_img:hover {
     background-color: aqua;
+    cursor: pointer;
 }
 
-.insert_img.active {
+.menu_img.active {
     display: flex;
 }
 
 .text-content {
-    max-width: 95%;
+    width: 95%;
+}
+
+.text-content:focus {
+    outline: none;
+}
+
+.add-btn {
+    width: 100%;
+    background-color: azure;
+    text-align: center;
+}
+
+.add-btn:hover {
+    background-color: lightblue;
 }

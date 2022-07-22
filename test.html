@@ -12,7 +12,7 @@
 <body>
     <div id="menu">
         <select name="titre" id="titleBtn">
-            <option value="">Selection de titre</option>
+            <option value="">Pas de titre</option>
             <option value="h1">Gros</option>
             <option value="h3">moins gros</option>
         </select>
@@ -22,256 +22,53 @@
         <button id="img" class="btn">IMG</button>
     </div>
 
+    <div contenteditable spellcheck id="text_editor_wrapper" style="border:1px solid black; height: 500px; overflow-y:auto ;">
 
-    <div contenteditable spellcheck style="border:1px solid black; height: 500px; overflow-y:auto ;" id="text_editor_wrapper">
-        <div class="paragraphe">
-            <p contenteditable="true" class="text-content">
-                <span class="placeholder"></span>
-            </p>
-            <div class="img"></div>
-            <div class="modal-add-btn">
+        <div class="text_editor">
 
-                <div class="insert_img">
-                    <div id="left_img" class="opt_img" contentEditable="false">Ajouter une image à gauche</div>
-                    <div id="right_img" class="opt_img" contentEditable="false">Ajouter une image à droite</div>
-
+            <div class="paragraphe" contenteditable="false">
+                <div contenteditable="true" id="text-content" class="text-content">
+                    <span id="placeholder" class="placeholder" contenteditable="false"></span>
                 </div>
-                <div class="button_opt" contentEditable="false">+
+            </div>
 
+            <div class="modal-add-btn">
+                <div class="opt_selector">
+                    <div class="insert_img hover menu_img">
+                        <div class="opt_img left_img" contentEditable="false">Ajouter une image à gauche</div>
+                        <div class="opt_img right_img" contentEditable="false">Ajouter une image à droite</div>
+                    </div>
+                    <div class="remove_img hover menu_img">
+                        <div class="opt_img left_img" contentEditable="false">Supprimer le paragraphe</div>
+                        <div class="opt_img right_img" contentEditable="false">Supprimer l'image</div>
+                        <div class="opt_img right_img" contentEditable="false">Supprimer le texte</div>
+                    </div>
+                </div>
+
+                <div class="btn_selector">
+
+                    <div class="button_opt add" contentEditable="false">+</div>
+                    <div class="button_opt remove" contentEditable="false">-</div>
                 </div>
 
             </div>
-        </div>
 
+
+
+
+
+
+        </div>
+        <div class="modal-add-parag" contenteditable="false">
+            <div class="add-btn">+</div>
+        </div>
 
     </div>
 
 
-    <div id="overlay"></div>
-    <div id="addImg">
-        <textarea id="addImgText" placeholder="Saisissez votre texte"></textarea>
-        <!--<form action="envoi_img.php" method="POST" enctype="multipart/form-data">-->
-
-        <input type="file" name="image[]" id="image" multiple="multiple">
-
-        <p>L'image doit être:</p>
-        <div>
-            <input type="radio" id="radioLeft" name="align" value="left">
-            <label for="left">A gauche</label>
-            <input type="radio" id="radioRight" name="align" value="right">
-            <label for="right">A droite</label>
-            <input type="radio" id="radioCenter" name="align" value="center">
-            <label for="center">Centrer</label>
-        </div>
-        <p>Taille de l'image:</p>
-        <div>
-
-            <input type="radio" id="smallImg" name="size" value="small">
-            <label for="small">Petite</label>
-            <input type="radio" id="mediumImg" name="size" value="medium">
-            <label for="medium">Moyenne</label>
-            <input type="radio" id="bigImg" name="size" value="big">
-            <label for="big">Grande</label>
-        </div>
-        <button id='send'>Envoi</button>
-
-
-        <!-- </form>-->
-    </div>
 
 </body>
-<script>
-    let v = 0
-    let te_wrapper = document.getElementById("text_editor_wrapper")
-
-    let btn_gras = document.getElementById('gras');
-    btn_gras.addEventListener('click', function() {
-        mep('strong', this);
-
-
-    })
-    let btn_underline = document.getElementById('under');
-    btn_underline.addEventListener('click', function() {
-        mep('u', this);
-
-    })
-    let bnt_ital = document.getElementById('italique')
-    bnt_ital.addEventListener('click', function() {
-        mep('i', this);
-
-    })
-    let bnt_img = document.getElementById('img')
-    bnt_img.addEventListener('click', toggleBtn)
-
-    let btn_send = document.getElementById('send');
-    btn_send.addEventListener('click', sendNewImg)
-
-    const overlay = document.getElementById('overlay');
-    overlay.addEventListener('click', toggleBtn)
-
-    let opt_menu = document.querySelector('.insert_img');
-    let btn_opt = document.querySelector(".button_opt");
-    btn_opt.addEventListener('mouseenter', function() {
-        opt_menu.classList.toggle('active')
-
-    })
-    btn_opt.addEventListener('mouseleave', function() {
-        opt_menu.classList.toggle('active')
-    })
-    opt_menu.addEventListener('mouseenter', function() {
-        if (!opt_menu.classList.contains('active')) {
-            opt_menu.classList.toggle('active')
-        }
-    })
-    opt_menu.addEventListener('mouseleave', function() {
-        opt_menu.classList.toggle('active')
-    })
-
-
-
-    // ajout d'image
-    function sendNewImg() {
-        const new_img_text = document.getElementById('addImgText')
-        const new_div = document.createElement('div')
-        new_div.classList = "newDivImg"
-        const new_img = document.createElement('img')
-        const new_text = document.createElement('p')
-
-        new_text.innerText = new_img_text.value
-        if (document.getElementById('smallImg').checked) {
-            new_img.style.width = '50px';
-        } else if (document.getElementById('mediumImg').checked) {
-            new_img.style.width = '450px';
-        } else if (document.getElementById('bigImg').checked) {
-            new_img.style.width = '950px';
-        }
-        new_img.src = "3000.png"
-        new_img.style.width = '150px';
-        if (document.getElementById('radioLeft').checked) {
-            new_text.style.order = "2"
-            new_img.style.order = "1"
-        } else if (document.getElementById('radioRight').checked) {
-            new_text.style.order = "1"
-            new_img.style.order = "2"
-        }
-        new_div.style.width = "98%"
-        new_div.style.padding = "5px"
-        new_div.appendChild(new_img)
-        new_div.appendChild(new_text)
-        te_wrapper.appendChild(new_div)
-        new_img_text.value = ""
-        toggleBtn();
-
-    }
-
-    function toggleBtn() {
-        document.getElementById('overlay').classList.toggle('active')
-        document.getElementById('addImg').classList.toggle('active')
-    }
-
-    //fonction de mise en page du titre
-    let listTitle = document.getElementById('titleBtn')
-    listTitle.addEventListener('change', function() {
-
-        if (te_wrapper.firstChild.nodeName == "H1" || te_wrapper.firstChild.nodeName == "H3") {
-
-            te_wrapper.firstChild.remove()
-
-        }
-
-
-        title = document.createElement(listTitle.value)
-        title.id = "title"
-        title.ariaLabel = "titre"
-
-        title.style.padding = "5px"
-
-        span = document.createElement("span")
-        span.id = "spanTitle"
-        span.style.color = "grey"
-        span.style.width = "100 px"
-            //span.contentEditable = false;
-        span.innerText = "Saisir le titre"
-        title.appendChild(span)
-
-
-        te_wrapper.insertBefore(title, te_wrapper.firstChild)
-
-
-
-        const spanClk = document.getElementById('spanTitle')
-        spanClk.addEventListener('click', function() {
-            console.log(document.getElementById('spanTitle').parentNode)
-            document.getElementById('title').removeChild(document.getElementById("spanTitle"))
-        })
-
-
-
-    })
-
-
-
-
-
-    //------------------------Fonction de mise en page-------------------------
-    function mep(valeur, btn) {
-        btn.classList.toggle('active')
-
-        if (btn.classList.contains('active')) {
-            console.log(btn.id)
-            let selObj = window.getSelection();
-            if (selObj.getRangeAt(0).startOffset != selObj.getRangeAt(0).endOffset) {
-                repObj = `<${valeur}>${selObj}</${valeur}>`
-                replaceSelectionWithHtml(repObj)
-
-            } else {
-                new_doc = document.createElement(valeur)
-                new_doc.innerText = ` `
-                new_doc.classList = "newDiv"
-                te_wrapper.insertAdjacentElement("beforeend", new_doc)
-                document.querySelector('.newDiv').style.background = "red"
-                last_focus = document.querySelector('.newDiv')
-
-                //repObj = `<${valeur}> </${valeur}>`
-                //replaceSelectionWithHtml(repObj)
-                //te_wrapper.focus()
-
-            }
-        } // else {
-        //    let range = document.createRange();
-        //    //range.collapse = true;
-        //    range.setStartAfter(te_wrapper.firstChild)//
-
-        //    console.log(range)//
-
-        //    console.log(`pas ${btn.id}`)
-        //        //te_wrapper.lastChild.focus()//
-
-        //}
-        last_focus.focus()
-        console.log(last_focus)
-
-    }
-
-    function replaceSelectionWithHtml(html) {
-        var range;
-        if (window.getSelection && window.getSelection().getRangeAt) {
-            range = window.getSelection().getRangeAt(0);
-            range.deleteContents();
-            var div = document.createElement("div");
-            div.innerHTML = html;
-            var frag = document.createDocumentFragment(),
-                child;
-            while ((child = div.firstChild)) {
-                frag.appendChild(child);
-
-            }
-            range.insertNode(frag);
-        } else if (document.selection && document.selection.createRange) {
-            range = document.selection.createRange();
-            range.pasteHTML(html);
-        }
-    }
+<script src="script.js">
 </script>
 
 </html>
